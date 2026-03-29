@@ -28,17 +28,5 @@ pipeline {
         sh 'python -c "print(\"helloworld\")"'
       }
     }
-
-    stage('DB') {
-      agent {
-        docker {
-          image 'mysql:8'
-          args '-e MYSQL_ROOT_PASSWORD=root'
-        }
-      }
-      steps {
-        sh 'mysql -u root -proot -e "SHOW DATABASES;"'
-      }
-    }
   }
 }
