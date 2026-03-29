@@ -1,7 +1,6 @@
 pipeline {
-  agent {
-    docker { image 'node:16-alpine' }
-  }
+  agent none
+
   stages {
     stage('Test') {
       agent {
@@ -11,31 +10,34 @@ pipeline {
         sh 'node --version'
       }
     }
-    stage('Run'){
+
+    stage('Run') {
       agent {
         docker { image 'node:16-alpine' }
       }
       steps {
-       sh "echo 'hi,i am dharanesh'"
+        sh "echo 'hi, i am dharanesh'"
       }
     }
-    stage('java'){
+
+    stage('Python') {
       agent {
         docker { image 'python:3.11-alpine' }
       }
-      step {
-        sh " print('helloworld')"
+      steps {
+        sh 'python -c "print(\"helloworld\")"'
       }
     }
-    stage('DB'){
+
+    stage('DB') {
       agent {
-        docker { 
+        docker {
           image 'mysql:8'
           args '-e MYSQL_ROOT_PASSWORD=root'
         }
       }
-      step{
-        sh " mysql -u root -proot -e "SHOW DATABASES;" "
+      steps {
+        sh 'mysql -u root -proot -e "SHOW DATABASES;"'
       }
     }
   }
